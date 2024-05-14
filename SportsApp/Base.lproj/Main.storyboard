@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1tA-EM-CUj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="E4F-p4-r1p">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -58,8 +59,8 @@
                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <size key="customSize" width="161" height="131"/>
                                         <connections>
-                                            <outlet property="leageImage" destination="Fwt-cf-PdX" id="biT-NT-0YL"/>
-                                            <outlet property="leageName" destination="UWa-3Y-II6" id="v1i-zJ-x9l"/>
+                                            <outlet property="sportImage" destination="Fwt-cf-PdX" id="biT-NT-0YL"/>
+                                            <outlet property="sportName" destination="UWa-3Y-II6" id="v1i-zJ-x9l"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -82,6 +83,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="922.90076335877859" y="-307.04225352112678"/>
+        </scene>
+        <!--Leages View Controller-->
+        <scene sceneID="t08-gi-vOj">
+            <objects>
+                <viewController id="E4F-p4-r1p" customClass="LeagesViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xWR-a6-32k">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kgt-XI-mZV">
+                                <rect key="frame" x="8" y="59" width="377" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="di4-Mt-f5p"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="di4-Mt-f5p" firstAttribute="bottom" secondItem="kgt-XI-mZV" secondAttribute="bottom" id="3IL-Fz-rY0"/>
+                            <constraint firstItem="kgt-XI-mZV" firstAttribute="top" secondItem="di4-Mt-f5p" secondAttribute="top" id="mSb-Lz-IMw"/>
+                            <constraint firstItem="di4-Mt-f5p" firstAttribute="trailing" secondItem="kgt-XI-mZV" secondAttribute="trailing" constant="8" id="xhW-mR-SNE"/>
+                            <constraint firstItem="kgt-XI-mZV" firstAttribute="leading" secondItem="di4-Mt-f5p" secondAttribute="leading" constant="8" id="zxY-Lk-Iw2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="leagesTable" destination="kgt-XI-mZV" id="B6E-zN-bql"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dDA-it-dmc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1670" y="-299"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="3Be-F7-AWJ">
@@ -133,5 +164,8 @@
         <namedColor name="SecondaryColor">
             <color red="0.0" green="0.99099999666213989" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

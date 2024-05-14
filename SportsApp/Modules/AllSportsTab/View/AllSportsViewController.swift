@@ -33,8 +33,8 @@ extension AllSportsViewController:UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AllSportsCollectionViewCell
-        cell.leageImage.image=UIImage(named:allSportsViewModel.getSportsArray()[indexPath.item].image)
-        cell.leageName.text=allSportsViewModel.getSportsArray()[indexPath.row].name
+        cell.sportImage.image=UIImage(named:allSportsViewModel.getSportsArray()[indexPath.item].image)
+        cell.sportName.text=allSportsViewModel.getSportsArray()[indexPath.row].name
         cell.layer.borderColor = UIColor.darkGray.cgColor
         cell.layer.borderWidth=1
         cell.layer.cornerRadius=20
