@@ -24,6 +24,13 @@ class AllSportsViewController: UIViewController {
 extension AllSportsViewController:UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
+        
+         guard let leagesViewController = storyboard?.instantiateViewController(withIdentifier: "leages") as? LeagesViewController else {
+             return
+         }
+        leagesViewController.sportIndex=indexPath.row
+        
+         navigationController?.pushViewController(leagesViewController, animated: true)
     }
 }
 extension AllSportsViewController:UICollectionViewDataSource{

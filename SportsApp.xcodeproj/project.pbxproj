@@ -14,6 +14,8 @@
 		9F157CEC2BF1D48E003ED98D /* LeagesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F157CEA2BF1D48E003ED98D /* LeagesTableViewCell.xib */; };
 		9F157CEE2BF1DC96003ED98D /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F157CED2BF1DC95003ED98D /* UITableView+Extension.swift */; };
 		9F312B5E2BF027C700AE2B99 /* AllSportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F312B5D2BF027C700AE2B99 /* AllSportsViewController.swift */; };
+		9F58DF122BF386D5006157A3 /* FootballLeagesMdel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58DF112BF386D5006157A3 /* FootballLeagesMdel.swift */; };
+		9F58DF142BF38F54006157A3 /* LeagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58DF132BF38F54006157A3 /* LeagesViewModel.swift */; };
 		9F59318C2BEFFD0A00D43A50 /* FavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F59318B2BEFFD0A00D43A50 /* FavViewController.swift */; };
 		9F76886C2BF0AF1500946832 /* AllSportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F76886B2BF0AF1500946832 /* AllSportsViewModel.swift */; };
 		9F76886F2BF0B05500946832 /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F76886E2BF0B05500946832 /* Sport.swift */; };
@@ -59,6 +61,8 @@
 		9F157CEA2BF1D48E003ED98D /* LeagesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeagesTableViewCell.xib; sourceTree = "<group>"; };
 		9F157CED2BF1DC95003ED98D /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		9F312B5D2BF027C700AE2B99 /* AllSportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSportsViewController.swift; sourceTree = "<group>"; };
+		9F58DF112BF386D5006157A3 /* FootballLeagesMdel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootballLeagesMdel.swift; sourceTree = "<group>"; };
+		9F58DF132BF38F54006157A3 /* LeagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagesViewModel.swift; sourceTree = "<group>"; };
 		9F59318B2BEFFD0A00D43A50 /* FavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavViewController.swift; sourceTree = "<group>"; };
 		9F76886B2BF0AF1500946832 /* AllSportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSportsViewModel.swift; sourceTree = "<group>"; };
 		9F76886E2BF0B05500946832 /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
@@ -142,16 +146,9 @@
 		9F157CE62BF1D077003ED98D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				9F58DF132BF38F54006157A3 /* LeagesViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		9F76886D2BF0B04800946832 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				9F76886E2BF0B05500946832 /* Sport.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		9FC55C962BEFE4F30071A093 = {
@@ -230,6 +227,8 @@
 		9FC55CD42BEFE5220071A093 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9F76886E2BF0B05500946832 /* Sport.swift */,
+				9F58DF112BF386D5006157A3 /* FootballLeagesMdel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -237,7 +236,6 @@
 		9FC55CD52BEFE8260071A093 /* AllSportsTab */ = {
 			isa = PBXGroup;
 			children = (
-				9F76886D2BF0B04800946832 /* Model */,
 				9FC55CD82BEFF8E60071A093 /* ViewModel */,
 				9FC55CD72BEFF8D50071A093 /* View */,
 			);
@@ -527,6 +525,8 @@
 				9F157CEB2BF1D48E003ED98D /* LeagesTableViewCell.swift in Sources */,
 				9F76886F2BF0B05500946832 /* Sport.swift in Sources */,
 				9FC55CA32BEFE4F30071A093 /* AppDelegate.swift in Sources */,
+				9F58DF122BF386D5006157A3 /* FootballLeagesMdel.swift in Sources */,
+				9F58DF142BF38F54006157A3 /* LeagesViewModel.swift in Sources */,
 				9F59318C2BEFFD0A00D43A50 /* FavViewController.swift in Sources */,
 				9F157CE82BF1D0B4003ED98D /* LeagesViewController.swift in Sources */,
 				9F157CEE2BF1DC96003ED98D /* UITableView+Extension.swift in Sources */,

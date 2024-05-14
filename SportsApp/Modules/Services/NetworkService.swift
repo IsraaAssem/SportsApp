@@ -8,24 +8,23 @@
 import Foundation
 import Alamofire
 protocol NetworkServiceProtocol{
-    func fetchData<T:Decodable>(completion:@escaping([T]?,Error?)->Void,url:URL)
+    func fetchData<T:Decodable>(url:URL,completion:@escaping(Result<T,Error>)->Void)
 }
 class NetworkService:NetworkServiceProtocol{
-    func fetchData<T:Decodable>(completion:@escaping([T]?,Error?)->Void,url:URL){
-              
+    func fetchData<T:Decodable>(url:URL,completion:@escaping(Result<T,Error>)->Void){
         AF.request(url).responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let data):
-                if let data=data as? [T]{
-                    completion(data,nil)
-                    print(data)
-                }else{
-                    completion(nil,NSError(domain: "Parsing error", code: 0, userInfo: [NSLocalizedDescriptionKey:"Failed to parse response"]))
-                }
+                completion(.success(data))
             case .failure(let error):
-                completion(nil,error)
+                if let data = response.data, let jsonError = try? JSONSerialization.jsonObject(with: data, options: []) {
+                            print("JSON Error: \(jsonError)")
+                        }
+                print("Error....",error.localizedDescription)
+                completion(.failure(error))
             }
         }
         
+    
     }
 }
