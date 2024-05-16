@@ -18,12 +18,6 @@ class LeagesTableViewCell: UITableViewCell {
         self.layer.borderWidth=1
         leageImage.layer.cornerRadius = leageImage.bounds.width / 2
         leageImage.clipsToBounds = true
-        //        let inset: CGFloat = 10
-        //           contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: inset, right: 0))
-        //
-        //           contentView.layer.cornerRadius = 10
-        //           contentView.layer.borderColor = UIColor.black.cgColor
-        //           contentView.layer.borderWidth = 1
         
     }
     
