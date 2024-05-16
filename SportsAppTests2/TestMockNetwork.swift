@@ -61,18 +61,6 @@ final class TestMockNetwork:XCTestCase{
             }
         }
     }
-//    
-//    func testRequestHeaders() {
-//        let expectedHeaders = ["Content-Type": "application/json"]
-//        mockNetwork.fetchData<FootballLeageResponse, Error>(url: URL(string: "https://www.icloud.com")!) { result:Result<FootballLeageResponse, Error> in }
-//        XCTAssertEqual(mockNetwork.lastRequestHeaders, expectedHeaders, "Request headers should match the expected headers")
-//    }
-//
-//    func testQueryParameters() {
-//        let expectedParameters = ["param1": "value1", "param2": "value2"]
-//        mockNetwork.fetchData(url: URL(string: "https://www.icloud.com?param1=value1&param2=value2")!) { _ in }
-//        XCTAssertEqual(mockNetwork.lastRequestQueryParameters, expectedParameters, "Query parameters should match the expected parameters")
-//    }
 
 }
 
