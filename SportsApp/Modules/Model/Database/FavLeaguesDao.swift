@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-struct MoviesDao{
+struct FavLeaguesDao{
     let context:NSManagedObjectContext!
     let delegate = UIApplication.shared.delegate as! AppDelegate
     init(){
@@ -60,8 +60,6 @@ struct MoviesDao{
     func deleteLeague(league: FavLeaguesModel) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavLeagues")
         let predicates: [NSPredicate] = [
-            NSPredicate(format: "leagueName == %@", league.leagueName),
-            NSPredicate(format: "leagueLogo == %@", league.leagueLogo),
             NSPredicate(format: "leagueId == %d", league.leagueId),
           ]
           let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)

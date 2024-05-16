@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dba-pn-GwK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1tA-EM-CUj">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
@@ -121,10 +121,26 @@
                     <view key="view" contentMode="scaleToFill" id="nwG-Nf-WHt">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WJn-tT-138">
+                                <rect key="frame" x="8" y="59" width="377" height="710"/>
+                                <color key="backgroundColor" name="BackgroundColor"/>
+                                <color key="sectionIndexBackgroundColor" name="BackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="fE0-n6-usk"/>
                         <color key="backgroundColor" name="BackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fE0-n6-usk" firstAttribute="trailing" secondItem="WJn-tT-138" secondAttribute="trailing" constant="8" id="2gE-HD-DuO"/>
+                            <constraint firstItem="WJn-tT-138" firstAttribute="top" secondItem="fE0-n6-usk" secondAttribute="top" id="4Cg-DN-J3x"/>
+                            <constraint firstItem="fE0-n6-usk" firstAttribute="bottom" secondItem="WJn-tT-138" secondAttribute="bottom" id="Job-Iv-OBW"/>
+                            <constraint firstItem="WJn-tT-138" firstAttribute="leading" secondItem="fE0-n6-usk" secondAttribute="leading" constant="8" id="YYy-Wv-OO7"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Favorites" image="suit.heart.fill" catalog="system" id="MU1-je-AGN"/>
+                    <connections>
+                        <outlet property="favLeaguesTable" destination="WJn-tT-138" id="SrF-cM-9M5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oqe-2A-uDp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -133,7 +149,7 @@
         <!--League Details View Controller-->
         <scene sceneID="SNM-KU-Kns">
             <objects>
-                <viewController id="dba-pn-GwK" customClass="LeagueDetailsViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="detailsScreen" id="dba-pn-GwK" customClass="LeagueDetailsViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q1Q-QK-82g">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -272,31 +288,46 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8NZ-pY-oEp">
-                                <rect key="frame" x="326.33333333333331" y="44" width="50.666666666666686" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" name="PrimaryColor"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="suit.heart" catalog="system"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7j-cc-wi7">
-                                <rect key="frame" x="16.000000000000004" y="44" width="49.333333333333343" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7j-cc-wi7">
+                                <rect key="frame" x="16" y="51" width="36" height="28"/>
                                 <color key="tintColor" name="PrimaryColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="arrow.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="backBtn:" destination="dba-pn-GwK" eventType="touchUpInside" id="2co-Pe-gPm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8NZ-pY-oEp">
+                                <rect key="frame" x="342" y="52" width="35" height="27"/>
+                                <color key="tintColor" name="PrimaryColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="suit.heart" catalog="system"/>
+                                <connections>
+                                    <action selector="addToFavBtn:" destination="dba-pn-GwK" eventType="touchUpInside" id="WeG-iE-xF9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Sc-J5-J1G"/>
                         <color key="backgroundColor" name="BackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8NZ-pY-oEp" firstAttribute="width" secondItem="q1Q-QK-82g" secondAttribute="width" multiplier="0.0890585" id="CjE-3c-knn"/>
+                            <constraint firstItem="e7j-cc-wi7" firstAttribute="height" secondItem="q1Q-QK-82g" secondAttribute="height" multiplier="0.0328638" id="ClW-fO-Iig"/>
+                            <constraint firstItem="8NZ-pY-oEp" firstAttribute="top" secondItem="q1Q-QK-82g" secondAttribute="top" constant="52" id="Ju8-JV-wpR"/>
+                            <constraint firstItem="e7j-cc-wi7" firstAttribute="leading" secondItem="4Sc-J5-J1G" secondAttribute="leading" constant="16" id="Ptv-eH-od7"/>
+                            <constraint firstItem="e7j-cc-wi7" firstAttribute="width" secondItem="q1Q-QK-82g" secondAttribute="width" multiplier="0.0916031" id="VN9-Dl-t1Q"/>
+                            <constraint firstItem="4Sc-J5-J1G" firstAttribute="trailing" secondItem="8NZ-pY-oEp" secondAttribute="trailing" constant="16" id="XWZ-hs-8Jw"/>
+                            <constraint firstItem="e7j-cc-wi7" firstAttribute="top" secondItem="q1Q-QK-82g" secondAttribute="top" constant="51" id="ilB-zF-VJZ"/>
+                            <constraint firstItem="8NZ-pY-oEp" firstAttribute="height" secondItem="q1Q-QK-82g" secondAttribute="height" multiplier="0.0316901" id="zR3-UO-vYF"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="favLeagueBtn" destination="8NZ-pY-oEp" id="RkF-2l-MeU"/>
                         <outlet property="leagueDetailsCollectionView" destination="CfO-fM-D0z" id="mJW-Fm-J5O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hAu-Ny-Cl9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2056" y="347"/>
+            <point key="canvasLocation" x="2055.7251908396947" y="345.77464788732397"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wLl-Is-pce">

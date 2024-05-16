@@ -10,16 +10,17 @@ protocol LeagesViewModelProtocol{
     var bindLeagesToViewController:()->Void { get set }
     func getLeagesCount()->Int
     func getLeages()->[FootballLeage]
-    func fetchLeages(sportIndex:Int)->Void
+    func fetchLeages()->Void
 }
 class LeagesViewModel:LeagesViewModelProtocol{
+    var sportIndex=0
     let networkService:NetworkServiceProtocol
     init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
     }
     var bindLeagesToViewController:()->Void={}
     var footballLeages:[FootballLeage]?=nil
-    func fetchLeages(sportIndex:Int){
+    func fetchLeages(){
         let url = URL(string: "https://apiv2.allsportsapi.com/\(sportsDict[sportIndex]!)/?met=Leagues&APIkey=6d60bf6e27a572a97102e5f66104859253bf28f7bdd70dddef1405e12a5052db")!
         networkService.fetchData(url: url) { [weak self](result:Result<FootballLeageResponse,Error>) in
             switch result{

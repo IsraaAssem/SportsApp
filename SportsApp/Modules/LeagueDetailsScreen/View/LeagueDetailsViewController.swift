@@ -9,9 +9,25 @@ import UIKit
 
 class LeagueDetailsViewController: UIViewController {
     @IBOutlet weak var leagueDetailsCollectionView: UICollectionView!
+    var favLeaguesViewModel:FavLeaguesViewModelProtocol!
+    var alreadyInFavorites:Bool=false
+    
+    @IBOutlet weak var favLeagueBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        favLeaguesViewModel.retrieveStoredFavLeagues()
+        if let currentLeagueId = favLeaguesViewModel?.getCurrentLeage().leagueId {
+            if favLeaguesViewModel.getFavLeaguesArr().contains { $0.leagueId == currentLeagueId } {
+                alreadyInFavorites=true
+                favLeagueBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            } else {
+                alreadyInFavorites=false
+                favLeagueBtn.setImage(UIImage(systemName: "suit.heart"), for: .normal)
+            }
+        } else {
+        }
+
         leagueDetailsCollectionView.delegate=self
         leagueDetailsCollectionView.dataSource=self
         let layout=UICollectionViewCompositionalLayout{[weak self] index,environment in
@@ -22,10 +38,36 @@ class LeagueDetailsViewController: UIViewController {
             }else{
                 return self?.drawTeamsSection()
             }
+            
         }
         leagueDetailsCollectionView.setCollectionViewLayout(layout, animated: true)
         leagueDetailsCollectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
 
+    }
+    
+    @IBAction func backBtn(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+
+    }
+    @IBAction func addToFavBtn(_ sender: Any) {
+        if alreadyInFavorites{
+            var deleteAlert=UIAlertController(title: "Delete League", message: "Are you sure you want to delete this league from favorites?", preferredStyle: UIAlertController.Style.alert)
+            var deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { [weak self] _ in
+                self?.favLeaguesViewModel.deleteFromFavLeagues(league: (self?.favLeaguesViewModel?.getCurrentLeage())!)
+                self?.alreadyInFavorites=false
+                self?.favLeagueBtn.setImage(UIImage(systemName: "suit.heart"), for: .normal)
+            })
+            var cancelAction=UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)
+            deleteAlert.addAction(deleteAction)
+            deleteAlert.addAction(cancelAction)
+            self.present(deleteAlert, animated: true, completion: nil)
+            //favLeaguesViewModel.deleteFromFavLeagues(league: (favLeaguesViewModel?.getCurrentLeage())!)
+        }else{
+            favLeaguesViewModel.addLeagueToFav(league: favLeaguesViewModel?.getCurrentLeage() ?? FavLeaguesModel(leagueId: 28, leagueLogo: "https://apiv2.allsportsapi.com/logo/logo_leagues/28_world-cup.png", leagueName: "World Cup"))
+            alreadyInFavorites=true
+            favLeagueBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            //print( favLeaguesViewModel.getFavLeaguesArr())
+        }
     }
     func  drawEventsSection()->NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))

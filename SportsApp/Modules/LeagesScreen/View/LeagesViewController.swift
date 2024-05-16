@@ -8,7 +8,8 @@
 import UIKit
 import Kingfisher
 class LeagesViewController: UIViewController {
-    var sportIndex=0
+    
+    let indicator = UIActivityIndicatorView(style: .large)
     @IBOutlet weak var leagesTable: UITableView!
     var leagesViewModel:LeagesViewModelProtocol?
     override func viewDidLoad() {
@@ -21,11 +22,17 @@ class LeagesViewController: UIViewController {
         leagesViewModel?.bindLeagesToViewController={[weak self] in
             DispatchQueue.main.async{
                 self?.leagesTable.reloadData()
+                self?.stopIndicator()
             }
         }
-        leagesViewModel?.fetchLeages(sportIndex:sportIndex)
+        leagesViewModel?.fetchLeages()
         leagesTable.registerNib(cell: LeagesTableViewCell.self)
-        
+        indicator.center = self.view.center
+        indicator.startAnimating()
+        view.addSubview(indicator)
+    }
+    func stopIndicator() {
+        indicator.stopAnimating()
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30.0
@@ -51,13 +58,29 @@ class LeagesViewController: UIViewController {
 }
 
 extension LeagesViewController:UITableViewDelegate{
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let secondViewController = storyboard.instantiateViewController(withIdentifier: "detailsScreen") as? LeagueDetailsViewController {
+            var image:String=""
+            let favLeaguesViewModel=FavLeaguesViewModel()
+            if let urlString = leagesViewModel?.getLeages()[indexPath.row].leagueLogo,
+               let url = URL(string: urlString) {
+                image=urlString
+            } else {
+                image = "leagueImage"
+            }
+            favLeaguesViewModel.currentLeague=FavLeaguesModel(leagueId: Int64((leagesViewModel?.getLeages()[indexPath.row].leagueKey)!), leagueLogo: image, leagueName: (leagesViewModel?.getLeages()[indexPath.row].leagueName)!)
+            secondViewController.favLeaguesViewModel=favLeaguesViewModel
+            secondViewController.modalPresentationStyle = .fullScreen
+            self.present(secondViewController, animated: true, completion: nil)
+        }
+    }
 }
 extension LeagesViewController:UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return leagesViewModel?.getLeagesCount() ?? 0
-        //return 5
+        
     }
     
     
@@ -68,12 +91,12 @@ extension LeagesViewController:UITableViewDataSource{
            let url = URL(string: urlString) {
             leagesCell.leageImage.kf.setImage(with: url, placeholder: UIImage(named: "loadingPlaceholder"))
         } else {
-            leagesCell.leageImage.image = UIImage(named: "loadingPlaceholder")
+            leagesCell.leageImage.image = UIImage(named: "leagueImage")
         }
-        //leagesCell.leageImage.image = UIImage(named: "loadingPlaceholder")
-        //leagesCell.leageName.text="Israa Assem Mohamed"
         return leagesCell
     }
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
     
 }

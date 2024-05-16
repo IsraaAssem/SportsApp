@@ -12,12 +12,9 @@ class AllSportsViewController: UIViewController {
     let allSportsViewModel:AllSportsViewModelProtocol=AllSportsViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-        //leagesCollectionView.register(AllSportsCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         self.tabBarItem.title="Sports"
         sportsCollectionView.delegate=self
         sportsCollectionView.dataSource=self
-        //sportsCollectionView.clipsToBounds=true
-        //sportsCollectionView.layer.masksToBounds=true
     }
     
 }
@@ -28,8 +25,9 @@ extension AllSportsViewController:UICollectionViewDelegate{
          guard let leagesViewController = storyboard?.instantiateViewController(withIdentifier: "leages") as? LeagesViewController else {
              return
          }
-        leagesViewController.sportIndex=indexPath.row
-        
+        let leagesViewModel=LeagesViewModel(networkService: NetworkService())
+        leagesViewModel.sportIndex=indexPath.row
+        leagesViewController.leagesViewModel=leagesViewModel
          navigationController?.pushViewController(leagesViewController, animated: true)
     }
 }
@@ -57,7 +55,7 @@ extension AllSportsViewController:UICollectionViewDelegateFlowLayout{
         return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 2
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1

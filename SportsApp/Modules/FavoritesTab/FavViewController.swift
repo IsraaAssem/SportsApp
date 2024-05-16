@@ -8,22 +8,99 @@
 import UIKit
 
 class FavViewController: UIViewController {
-
+    
+    @IBOutlet weak var favLeaguesTable: UITableView!
+    
+    var favViewModel:FavLeaguesViewModelProtocol!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        favViewModel=FavLeaguesViewModel()
+        favLeaguesTable.delegate=self
+        favLeaguesTable.dataSource=self
+        setTableTitle()
+        setTableBackgroundColor()        
+        favViewModel.bindFavLeagesToViewController={[weak self] in
+            DispatchQueue.main.async{
+                self?.favLeaguesTable.reloadData()
+            }
+        }
+        
+        favLeaguesTable.registerNib(cell: LeagesTableViewCell.self)
+       
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        favViewModel.retrieveStoredFavLeagues()
+    }
+    init(favViewModel: FavLeaguesViewModelProtocol!) {
+        self.favViewModel = favViewModel
+        super.init(nibName: "LeagesTableViewCell", bundle: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
-    */
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30.0
+    }
+    func setTableTitle(){
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: favLeaguesTable.bounds.width, height: 40))
+        let titleLabel = UILabel(frame: headerView.bounds)
+        titleLabel.text = "Leagues"
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.textColor = .black
+        headerView.addSubview(titleLabel)
+        favLeaguesTable.tableHeaderView = headerView
 
+    }
+    func setTableBackgroundColor(){
+        if let color=UIColor(named: "BackgroundColor"){
+            favLeaguesTable.backgroundColor=color
+        }else{
+            favLeaguesTable.backgroundColor=UIColor.white
+        }
+    }
+    
+}
+extension FavViewController:UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        favViewModel.getFavLeagesArrCount()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let leagesCell=tableView.dequeueNibCell(cellClass: LeagesTableViewCell.self)
+        leagesCell.leageName.text=favViewModel?.getFavLeaguesArr()[indexPath.row].leagueName
+        if let urlString = favViewModel?.getFavLeaguesArr()[indexPath.row].leagueLogo,
+           let url = URL(string: urlString) {
+            leagesCell.leageImage.kf.setImage(with: url, placeholder: UIImage(named: "loadingPlaceholder"))
+        } else {
+            leagesCell.leageImage.image = UIImage(named: "loadingPlaceholder")
+        }
+        return leagesCell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+}
+extension FavViewController:UITableViewDelegate{
+     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        var deleteAction:UITableViewRowAction=UITableViewRowAction(style: UITableViewRowAction.Style.destructive, title: "Delete League", handler: {_,_  in
+            var deleteAlert=UIAlertController(title: "Delete League", message: "Are you sure you want to delete this league from favorites?", preferredStyle: UIAlertController.Style.alert)
+            var deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: {_ in
+                //tableView.reloadData()
+                self.favViewModel.deleteFromFavLeagues(league: self.favViewModel.getFavLeaguesArr()[indexPath.row])
+            })
+            var cancelAction=UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)
+            deleteAlert.addAction(deleteAction)
+            deleteAlert.addAction(cancelAction)
+            
+            self.present(deleteAlert, animated: true, completion: nil)
+
+        })
+       
+        return [deleteAction]
+    }
 }
