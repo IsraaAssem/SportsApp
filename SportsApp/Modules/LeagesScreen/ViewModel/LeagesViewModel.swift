@@ -11,6 +11,7 @@ protocol LeagesViewModelProtocol{
     func getLeagesCount()->Int
     func getLeages()->[FootballLeage]
     func fetchLeages()->Void
+    func getSportIndex()->Int
 }
 class LeagesViewModel:LeagesViewModelProtocol{
     var sportIndex=0
@@ -37,6 +38,9 @@ class LeagesViewModel:LeagesViewModelProtocol{
     }
     func getLeagesCount()->Int{
         return footballLeages?.count ?? 0
+    }
+    func getSportIndex()->Int{
+        return sportIndex
     }
     let sportsDict=[0:"football",1:"basketball",2:"cricket",3:"tennis"]
 }

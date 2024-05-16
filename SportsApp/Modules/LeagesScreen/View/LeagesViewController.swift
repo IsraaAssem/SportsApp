@@ -18,7 +18,7 @@ class LeagesViewController: UIViewController {
         leagesTable.dataSource=self
         setTableTitle()
         setTableBackgroundColor()
-        leagesViewModel=LeagesViewModel(networkService: NetworkService())
+        //leagesViewModel=LeagesViewModel(networkService: NetworkService())
         leagesViewModel?.bindLeagesToViewController={[weak self] in
             DispatchQueue.main.async{
                 self?.leagesTable.reloadData()
@@ -46,7 +46,6 @@ class LeagesViewController: UIViewController {
         titleLabel.textColor = .black
         headerView.addSubview(titleLabel)
         leagesTable.tableHeaderView = headerView
-
     }
     func setTableBackgroundColor(){
         if let color=UIColor(named: "BackgroundColor"){
@@ -71,6 +70,13 @@ extension LeagesViewController:UITableViewDelegate{
             }
             favLeaguesViewModel.currentLeague=FavLeaguesModel(leagueId: Int64((leagesViewModel?.getLeages()[indexPath.row].leagueKey)!), leagueLogo: image, leagueName: (leagesViewModel?.getLeages()[indexPath.row].leagueName)!)
             secondViewController.favLeaguesViewModel=favLeaguesViewModel
+            let leagueDetailsViewModel = LeagueDetailsViewModel(networkService: NetworkService())
+            leagueDetailsViewModel.leagueID=(leagesViewModel?.getLeages()[indexPath.row].leagueKey)!
+            leagueDetailsViewModel.sportIndex=leagesViewModel?.getSportIndex() ?? 0
+            secondViewController.leagueDetailsViewModel=leagueDetailsViewModel
+            print("sportIndex: ",leagesViewModel?.getSportIndex() ?? 0)
+            print("leagueId: ",(leagesViewModel?.getLeages()[indexPath.row].leagueKey)!)
+            //leagueId,sportIndex
             secondViewController.modalPresentationStyle = .fullScreen
             self.present(secondViewController, animated: true, completion: nil)
         }
@@ -89,7 +95,7 @@ extension LeagesViewController:UITableViewDataSource{
         leagesCell.leageName.text=leagesViewModel?.getLeages()[indexPath.row].leagueName
         if let urlString = leagesViewModel?.getLeages()[indexPath.row].leagueLogo,
            let url = URL(string: urlString) {
-            leagesCell.leageImage.kf.setImage(with: url, placeholder: UIImage(named: "loadingPlaceholder"))
+            leagesCell.leageImage.kf.setImage(with: url, placeholder: UIImage(named: "leagueImage"))
         } else {
             leagesCell.leageImage.image = UIImage(named: "leagueImage")
         }

@@ -89,8 +89,7 @@ extension FavViewController:UITableViewDelegate{
      func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var deleteAction:UITableViewRowAction=UITableViewRowAction(style: UITableViewRowAction.Style.destructive, title: "Delete League", handler: {_,_  in
             var deleteAlert=UIAlertController(title: "Delete League", message: "Are you sure you want to delete this league from favorites?", preferredStyle: UIAlertController.Style.alert)
-            var deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: {_ in
-                //tableView.reloadData()
+            var deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { _  in
                 self.favViewModel.deleteFromFavLeagues(league: self.favViewModel.getFavLeaguesArr()[indexPath.row])
             })
             var cancelAction=UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)

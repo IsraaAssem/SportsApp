@@ -16,9 +16,9 @@ class TeamsCollectionViewCell: UICollectionViewCell {
             teamImage.layer.masksToBounds=true
             teamImage.layer.cornerRadius = teamImage.frame.size.width / 2
             teamImage.layoutIfNeeded()
-             teamImage.contentMode = .scaleAspectFill
+            teamImage.contentMode = .scaleAspectFill
             teamImage.clipsToBounds = true
             teamImage.layer.borderWidth=0.5
-            teamImage.layer.borderColor=UIColor(named: "PrimaryColor")?.cgColor
+            //teamImage.layer.borderColor=UIColor(named: "PrimaryColor")?.cgColor
         }
 }

@@ -11,12 +11,14 @@ class LeagueDetailsViewController: UIViewController {
     @IBOutlet weak var leagueDetailsCollectionView: UICollectionView!
     var favLeaguesViewModel:FavLeaguesViewModelProtocol!
     var alreadyInFavorites:Bool=false
-    
+    var leagueDetailsViewModel:LeagueDetailsViewModelProtocol!
     @IBOutlet weak var favLeagueBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         favLeaguesViewModel.retrieveStoredFavLeagues()
+        //leagueDetailsViewModel=LeagueDetailsViewModel(networkService: NetworkService())
         if let currentLeagueId = favLeaguesViewModel?.getCurrentLeage().leagueId {
             if favLeaguesViewModel.getFavLeaguesArr().contains { $0.leagueId == currentLeagueId } {
                 alreadyInFavorites=true
@@ -27,7 +29,7 @@ class LeagueDetailsViewController: UIViewController {
             }
         } else {
         }
-
+        
         leagueDetailsCollectionView.delegate=self
         leagueDetailsCollectionView.dataSource=self
         let layout=UICollectionViewCompositionalLayout{[weak self] index,environment in
@@ -42,9 +44,13 @@ class LeagueDetailsViewController: UIViewController {
         }
         leagueDetailsCollectionView.setCollectionViewLayout(layout, animated: true)
         leagueDetailsCollectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
-
+        leagueDetailsViewModel.fetchTeams()
+        leagueDetailsViewModel.bindLeagesToViewController={[weak self] in
+            DispatchQueue.main.async{
+                self?.leagueDetailsCollectionView.reloadData()
+            }
+        }
     }
-    
     @IBAction func backBtn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
 
@@ -52,7 +58,7 @@ class LeagueDetailsViewController: UIViewController {
     @IBAction func addToFavBtn(_ sender: Any) {
         if alreadyInFavorites{
             var deleteAlert=UIAlertController(title: "Delete League", message: "Are you sure you want to delete this league from favorites?", preferredStyle: UIAlertController.Style.alert)
-            var deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { [weak self] _ in
+            var deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
                 self?.favLeaguesViewModel.deleteFromFavLeagues(league: (self?.favLeaguesViewModel?.getCurrentLeage())!)
                 self?.alreadyInFavorites=false
                 self?.favLeagueBtn.setImage(UIImage(systemName: "suit.heart"), for: .normal)
@@ -61,12 +67,17 @@ class LeagueDetailsViewController: UIViewController {
             deleteAlert.addAction(deleteAction)
             deleteAlert.addAction(cancelAction)
             self.present(deleteAlert, animated: true, completion: nil)
-            //favLeaguesViewModel.deleteFromFavLeagues(league: (favLeaguesViewModel?.getCurrentLeage())!)
         }else{
             favLeaguesViewModel.addLeagueToFav(league: favLeaguesViewModel?.getCurrentLeage() ?? FavLeaguesModel(leagueId: 28, leagueLogo: "https://apiv2.allsportsapi.com/logo/logo_leagues/28_world-cup.png", leagueName: "World Cup"))
             alreadyInFavorites=true
             favLeagueBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            //print( favLeaguesViewModel.getFavLeaguesArr())
+            var deleteAlert=UIAlertController(title: nil, message: "League is added to favorites successfully.", preferredStyle: UIAlertController.Style.alert)
+           
+            var confirmationAction=UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+            
+            deleteAlert.addAction(confirmationAction)
+            self.present(deleteAlert, animated: true, completion: nil)
+            
         }
     }
     func  drawEventsSection()->NSCollectionLayoutSection{
@@ -130,6 +141,15 @@ class LeagueDetailsViewController: UIViewController {
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 20)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
+        section.visibleItemsInvalidationHandler = { (items, offset, environment) in
+        items.forEach { item in
+        let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
+        let minScale: CGFloat = 0.8
+        let maxScale: CGFloat = 1.0
+        let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
+        item.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+        }
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(40))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize,
@@ -146,7 +166,14 @@ extension LeagueDetailsViewController:UICollectionViewDelegate{
 }
 extension LeagueDetailsViewController:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        switch section{
+        case 0:
+            return 5
+        case 1:
+            return 5
+        default:
+            return leagueDetailsViewModel.getTeamsCount()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -157,7 +184,15 @@ extension LeagueDetailsViewController:UICollectionViewDataSource{
         case 1:
             cell=collectionView.dequeueReusableCell(withReuseIdentifier: "resultsCell", for: indexPath) as! ScoresCollectionViewCell
         default:
-            cell=collectionView.dequeueReusableCell(withReuseIdentifier: "teamsCell", for: indexPath) as! TeamsCollectionViewCell
+            let teamsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamsCell", for: indexPath) as! TeamsCollectionViewCell
+                
+                if let urlString = leagueDetailsViewModel?.getTeamsArray()[indexPath.row].teamLogo,
+                   let url = URL(string: urlString) {
+                    teamsCell.teamImage.kf.setImage(with: url, placeholder: UIImage(named: "leagueImage"))
+                } else {
+                    teamsCell.teamImage.image = UIImage(named: "leagueImage")
+                }
+                cell = teamsCell
         }
         
         return cell
