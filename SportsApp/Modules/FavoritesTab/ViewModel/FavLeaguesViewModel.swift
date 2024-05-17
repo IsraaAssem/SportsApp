@@ -14,8 +14,13 @@ protocol FavLeaguesViewModelProtocol{
     var bindFavLeagesToViewController:()->Void{get set}
     func getCurrentLeage()->FavLeaguesModel
     func addLeagueToFav(league:FavLeaguesModel)
+    func setCurrentLeague(league:FavLeaguesModel)->Void
 }
 class FavLeaguesViewModel:FavLeaguesViewModelProtocol{
+    func setCurrentLeague(league: FavLeaguesModel) {
+        currentLeague=league
+    }
+    
     var currentLeague:FavLeaguesModel!
     var favLeaguesDao:FavLeaguesDao?=nil
     var favLeagesArr:[FavLeaguesModel]=[]

@@ -86,7 +86,7 @@ extension FavViewController:UITableViewDataSource{
     }
 }
 extension FavViewController:UITableViewDelegate{
-     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var deleteAction:UITableViewRowAction=UITableViewRowAction(style: UITableViewRowAction.Style.destructive, title: "Delete League", handler: {_,_  in
             var deleteAlert=UIAlertController(title: "Delete League", message: "Are you sure you want to delete this league from favorites?", preferredStyle: UIAlertController.Style.alert)
             var deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { _  in
@@ -97,9 +97,23 @@ extension FavViewController:UITableViewDelegate{
             deleteAlert.addAction(cancelAction)
             
             self.present(deleteAlert, animated: true, completion: nil)
-
+            
         })
-       
+        
         return [deleteAction]
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let secondViewController = storyboard.instantiateViewController(withIdentifier: "detailsScreen") as? LeagueDetailsViewController {
+            
+            let leagueDetailsViewModel = LeagueDetailsViewModel(networkService: NetworkService())
+            leagueDetailsViewModel.leagueID=Int((favViewModel?.getFavLeaguesArr()[indexPath.row].leagueId)!)
+            leagueDetailsViewModel.sportIndex = 0
+            secondViewController.leagueDetailsViewModel=leagueDetailsViewModel
+            favViewModel.setCurrentLeague(league: (favViewModel?.getFavLeaguesArr()[indexPath.row])!)
+            secondViewController.favLeaguesViewModel=favViewModel
+            secondViewController.modalPresentationStyle = .fullScreen
+            self.present(secondViewController, animated: true, completion: nil)
+        }
     }
 }

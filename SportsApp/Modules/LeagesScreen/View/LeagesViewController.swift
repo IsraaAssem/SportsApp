@@ -69,6 +69,7 @@ extension LeagesViewController:UITableViewDelegate{
                 image = "leagueImage"
             }
             favLeaguesViewModel.currentLeague=FavLeaguesModel(leagueId: Int64((leagesViewModel?.getLeages()[indexPath.row].leagueKey)!), leagueLogo: image, leagueName: (leagesViewModel?.getLeages()[indexPath.row].leagueName)!)
+            
             secondViewController.favLeaguesViewModel=favLeaguesViewModel
             let leagueDetailsViewModel = LeagueDetailsViewModel(networkService: NetworkService())
             leagueDetailsViewModel.leagueID=(leagesViewModel?.getLeages()[indexPath.row].leagueKey)!

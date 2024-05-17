@@ -17,7 +17,7 @@ class LeagueDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        favLeaguesViewModel.retrieveStoredFavLeagues()
+        favLeaguesViewModel?.retrieveStoredFavLeagues()
         //leagueDetailsViewModel=LeagueDetailsViewModel(networkService: NetworkService())
         if let currentLeagueId = favLeaguesViewModel?.getCurrentLeage().leagueId {
             if favLeaguesViewModel.getFavLeaguesArr().contains { $0.leagueId == currentLeagueId } {
@@ -45,6 +45,7 @@ class LeagueDetailsViewController: UIViewController {
         leagueDetailsCollectionView.setCollectionViewLayout(layout, animated: true)
         leagueDetailsCollectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
         leagueDetailsViewModel.fetchTeams()
+        leagueDetailsViewModel.fetchEvents()
         leagueDetailsViewModel.bindLeagesToViewController={[weak self] in
             DispatchQueue.main.async{
                 self?.leagueDetailsCollectionView.reloadData()
@@ -168,21 +169,57 @@ extension LeagueDetailsViewController:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section{
         case 0:
-            return 5
+            return leagueDetailsViewModel.getEventsCount()
         case 1:
-            return 5
+            return leagueDetailsViewModel.getEventsCount()
         default:
             return leagueDetailsViewModel.getTeamsCount()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell:UICollectionViewCell!
+        let cell:UICollectionViewCell!
         switch indexPath.section{
         case 0:
-            cell=collectionView.dequeueReusableCell(withReuseIdentifier: "eventsCell", for: indexPath) as! EventsCollectionViewCell
+           let eventsCell=collectionView.dequeueReusableCell(withReuseIdentifier: "eventsCell", for: indexPath) as! EventsCollectionViewCell
+            if let urlString = leagueDetailsViewModel?.getEventsArray()[indexPath.row].homeTeamLogo,
+               let url = URL(string: urlString) {
+                eventsCell.homeTeameImage.kf.setImage(with: url, placeholder: UIImage(named: "leagueImage"))
+            } else {
+                eventsCell.homeTeameImage.image = UIImage(named: "leagueImage")
+            }
+            if let urlString = leagueDetailsViewModel?.getEventsArray()[indexPath.row].awayTeamLogo,
+               let url = URL(string: urlString) {
+                eventsCell.awayTeamImage.kf.setImage(with: url, placeholder: UIImage(named: "leagueImage"))
+            } else {
+                eventsCell.awayTeamImage.image = UIImage(named: "leagueImage")
+            }
+            eventsCell.homeTeamNAme.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventHomeTeam
+            eventsCell.awayTeamName.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventAwayTeam
+            eventsCell.date.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventDate
+            eventsCell.time.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventTime
+            
+            cell=eventsCell
         case 1:
-            cell=collectionView.dequeueReusableCell(withReuseIdentifier: "resultsCell", for: indexPath) as! ScoresCollectionViewCell
+            let resultsCell=collectionView.dequeueReusableCell(withReuseIdentifier: "resultsCell", for: indexPath) as! ScoresCollectionViewCell
+            if let urlString = leagueDetailsViewModel?.getEventsArray()[indexPath.row].homeTeamLogo,
+               let url = URL(string: urlString) {
+                resultsCell.homeTeamImage.kf.setImage(with: url, placeholder: UIImage(named: "leagueImage"))
+            } else {
+                resultsCell.homeTeamImage.image = UIImage(named: "leagueImage")
+            }
+            if let urlString = leagueDetailsViewModel?.getEventsArray()[indexPath.row].awayTeamLogo,
+               let url = URL(string: urlString) {
+                resultsCell.awayTeamImage.kf.setImage(with: url, placeholder: UIImage(named: "leagueImage"))
+            } else {
+                resultsCell.awayTeamImage.image = UIImage(named: "leagueImage")
+            }
+            resultsCell.homeTeamName.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventHomeTeam
+            resultsCell.awayTeamName.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventAwayTeam
+            resultsCell.date.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventDate
+            resultsCell.time.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventTime
+            resultsCell.finalResult.text=leagueDetailsViewModel?.getEventsArray()[indexPath.row].eventFinalResult
+            cell=resultsCell
         default:
             let teamsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamsCell", for: indexPath) as! TeamsCollectionViewCell
                 
