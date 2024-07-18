@@ -7,9 +7,6 @@
 
 import Foundation
 import UIKit
-import UIKit
-import UIKit
-
 class SectionHeaderView: UICollectionReusableView {
     static let reuseIdentifier = "SectionHeaderView"
 

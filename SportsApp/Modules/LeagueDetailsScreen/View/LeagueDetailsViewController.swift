@@ -58,13 +58,13 @@ class LeagueDetailsViewController: UIViewController {
     }
     @IBAction func addToFavBtn(_ sender: Any) {
         if alreadyInFavorites{
-            var deleteAlert=UIAlertController(title: "Delete League", message: "Are you sure you want to delete this league from favorites?", preferredStyle: UIAlertController.Style.alert)
-            var deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
+            let deleteAlert=UIAlertController(title: "Delete League", message: "Are you sure you want to delete this league from favorites?", preferredStyle: UIAlertController.Style.alert)
+            let deleteAction=UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
                 self?.favLeaguesViewModel.deleteFromFavLeagues(league: (self?.favLeaguesViewModel?.getCurrentLeage())!)
                 self?.alreadyInFavorites=false
                 self?.favLeagueBtn.setImage(UIImage(systemName: "suit.heart"), for: .normal)
             })
-            var cancelAction=UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)
+            let cancelAction=UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)
             deleteAlert.addAction(deleteAction)
             deleteAlert.addAction(cancelAction)
             self.present(deleteAlert, animated: true, completion: nil)
@@ -72,9 +72,9 @@ class LeagueDetailsViewController: UIViewController {
             favLeaguesViewModel.addLeagueToFav(league: favLeaguesViewModel?.getCurrentLeage() ?? FavLeaguesModel(leagueId: 28, leagueLogo: "https://apiv2.allsportsapi.com/logo/logo_leagues/28_world-cup.png", leagueName: "World Cup"))
             alreadyInFavorites=true
             favLeagueBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            var deleteAlert=UIAlertController(title: nil, message: "League is added to favorites successfully.", preferredStyle: UIAlertController.Style.alert)
+            let deleteAlert=UIAlertController(title: nil, message: "League is added to favorites successfully.", preferredStyle: UIAlertController.Style.alert)
            
-            var confirmationAction=UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+            let confirmationAction=UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
             
             deleteAlert.addAction(confirmationAction)
             self.present(deleteAlert, animated: true, completion: nil)

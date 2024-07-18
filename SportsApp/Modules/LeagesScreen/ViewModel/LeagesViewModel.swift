@@ -22,7 +22,7 @@ class LeagesViewModel:LeagesViewModelProtocol{
     var bindLeagesToViewController:()->Void={}
     var footballLeages:[FootballLeage]?=nil
     func fetchLeages(){
-        let url = URL(string: "https://apiv2.allsportsapi.com/\(sportsDict[sportIndex]!)/?met=Leagues&APIkey=6d60bf6e27a572a97102e5f66104859253bf28f7bdd70dddef1405e12a5052db")!
+        let url = URL(string: "https://apiv2.allsportsapi.com/\(sportsDict[sportIndex]!)/?met=Leagues&APIkey=\(API_KEY)")!
         networkService.fetchData(url: url) { [weak self](result:Result<FootballLeageResponse,Error>) in
             switch result{
             case .failure(let error):

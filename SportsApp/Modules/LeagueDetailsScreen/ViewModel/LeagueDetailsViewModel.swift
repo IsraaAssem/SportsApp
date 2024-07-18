@@ -29,7 +29,7 @@ class LeagueDetailsViewModel:LeagueDetailsViewModelProtocol{
     func fetchTeams(){
         //teams
         print("in fetch: \(sportsDict[sportIndex]!)  , \(leagueID)")
-        let url = URL(string: "https://apiv2.allsportsapi.com/\(sportsDict[sportIndex]!)/?&met=Teams&leagueId=\(leagueID)&APIkey=6d60bf6e27a572a97102e5f66104859253bf28f7bdd70dddef1405e12a5052db")!
+        let url = URL(string: "https://apiv2.allsportsapi.com/\(sportsDict[sportIndex]!)/?&met=Teams&leagueId=\(leagueID)&APIkey=\(API_KEY)")!
 
         networkService.fetchData(url: url) { [weak self](result:Result<TeamsResponse,Error>) in
             switch result{
@@ -44,7 +44,7 @@ class LeagueDetailsViewModel:LeagueDetailsViewModelProtocol{
     func fetchEvents(){
         //events
         print("in fetch: \(sportsDict[sportIndex]!)  , \(leagueID)")
-        let url = URL(string: "https://apiv2.allsportsapi.com/\(sportsDict[sportIndex]!)?met=Fixtures&leagueId=\(leagueID)&from=2023-01-18&to=2024-01-18&APIkey=6d60bf6e27a572a97102e5f66104859253bf28f7bdd70dddef1405e12a5052db")!
+        let url = URL(string: "https://apiv2.allsportsapi.com/\(sportsDict[sportIndex]!)?met=Fixtures&leagueId=\(leagueID)&from=2023-01-18&to=2024-01-18&APIkey=\(API_KEY)")!
 
         networkService.fetchData(url: url) { [weak self](result:Result<EventResponse,Error>) in
             switch result{

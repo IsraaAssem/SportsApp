@@ -18,7 +18,6 @@ class LeagesViewController: UIViewController {
         leagesTable.dataSource=self
         setTableTitle()
         setTableBackgroundColor()
-        //leagesViewModel=LeagesViewModel(networkService: NetworkService())
         leagesViewModel?.bindLeagesToViewController={[weak self] in
             DispatchQueue.main.async{
                 self?.leagesTable.reloadData()
@@ -103,7 +102,7 @@ extension LeagesViewController:UITableViewDataSource{
         return leagesCell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 80
     }
     
 }

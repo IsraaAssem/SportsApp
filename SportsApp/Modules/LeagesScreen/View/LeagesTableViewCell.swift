@@ -10,13 +10,14 @@ import UIKit
 class LeagesTableViewCell: UITableViewCell {
     @IBOutlet weak var leageName: UILabel!
     
+    @IBOutlet weak var cellBackgroundView: UIView!
     @IBOutlet weak var leageImage: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.layer.cornerRadius=10
-        self.layer.borderColor=UIColor.black.cgColor
-        self.layer.borderWidth=1
-        leageImage.layer.cornerRadius = leageImage.bounds.width / 2
+        self.cellBackgroundView.layer.cornerRadius=10
+        self.cellBackgroundView.layer.borderColor=UIColor(named: "PrimaryColor")?.cgColor
+        self.cellBackgroundView.layer.borderWidth=1
+        leageImage.layer.cornerRadius = leageImage.frame.width / 2
         leageImage.clipsToBounds = true
         
     }
