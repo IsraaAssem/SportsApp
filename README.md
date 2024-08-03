@@ -7,10 +7,14 @@ You can also add any league to your favorites and view the teams inside the leag
 •Technologies used:
 
 Swift - UIKit - Nib files - Alamoifre - Kingfisher - CoreData - Restful Api - MVVM - Lottie - XCTest - Unit testing
-![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 12 20 04](https://github.com/user-attachments/assets/5e6027a0-8683-4666-92ac-0f005734e9bb)
-![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 12 20 55](https://github.com/user-attachments/assets/9c726e72-fd57-4f6a-b891-6dc5eca4e9e8)
-![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 12 21 18](https://github.com/user-attachments/asset
-![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 12 23 59](https://github.com/user-attachments/assets/7b10884a-623d-409b-ab6f-c16d49a5a060)
-s/19c9f0e4-7982-4e53-ac18-0c356747ecfb)
 
-![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 12 22 40](https://github.com/user-attachments/assets/e808e9b6-0b5a-4bd0-bc21-b4f353aaa4b1)
+
+
+![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 13 04 28](https://github.com/user-attachments/assets/95a2eda0-c399-4084-81f0-344ffa210809)
+![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 13 04 44](https://github.com/user-attachments/assets/e3f500e8-ee1a-49a5-b70d-2fcf1c0c635d)
+![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 13 05 03](https://github.com/user-attachments/assets/95ec053a-6fdb-44c9-8b06-d861bb3b8c15)
+![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 13 07 58](https://github.com/user-attachments/assets/ff187858-9d16-40e5-95ae-6976b8eff09f)
+
+![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 13 05 36](https://github.com/user-attachments/assets/b73642d3-b95e-4af6-b1b5-dfc9e9e9e5f1)
+![Simulator Screenshot - iPhone 15 Pro - 2024-08-03 at 13 07 33](https://github.com/user-attachments/assets/721a4651-a7ee-4306-8125-c7772dffa027)
+
